@@ -17,7 +17,7 @@ from dustmaps.marshall import MarshallQuery
 from dustmaps.bayestar import BayestarQuery
 
 class BalmerLines:
-    def __init__(self, ncells, maxdist, dustmap=None, l=6*u.deg, b=5*u.deg, dl=None, sigma_i=None, T_e=None, velocities=None): 
+    def __init__(self, ncells, maxdist, dustmap='marshall', l=6*u.deg, b=5*u.deg, dl=None, sigma_i=None, T_e=None, velocities=None): 
         """
         This class defines length of arrays, distance between cells, distances from zero,
         electron velocity, electron density, sky coordinates, and accounts for dust by
@@ -299,17 +299,17 @@ class BalmerLines:
 
         # Calculate integrated intensities
         if extinction_correction:
-            ha_integrated = np.trapz(self.intensities_ha_with.value, self.velocities)  # .value strips units
-            hb_integrated = np.trapz(self.intensities_hb_with.value, self.velocities)
+            ha_peak_intensity = np.max(self.intensities_ha_with.value)
+            hb_peak_intensity = np.max(self.intensities_hb_with.value)
             label = 'with Dust Correction'
         else:
-            ha_integrated = np.trapz(self.intensities_ha_without.value, self.velocities)
-            hb_integrated = np.trapz(self.intensities_hb_without.value, self.velocities)
+            ha_peak_intensity = np.max(self.intensities_ha_without.value)
+            hb_peak_intensity = np.max(self.intensities_hb_without.value)
             label = 'without Dust Correction'
 
         # Create Gaussian profiles for H-alpha and H-beta
-        h_alpha_params = {'amp': ha_integrated, 'mean': 656.3, 'stddev': 1.0}
-        h_beta_params = {'amp': hb_integrated, 'mean': 486.1, 'stddev': 1.0}
+        h_alpha_params = {'amp': ha_peak_intensity, 'mean': 656.3, 'stddev': 1.0}
+        h_beta_params = {'amp': hb_peak_intensity, 'mean': 486.1, 'stddev': 1.0}
 
         spectra_h_alpha = gaussian(wavelengths, **h_alpha_params)
         spectra_h_beta = gaussian(wavelengths, **h_beta_params)
@@ -387,3 +387,4 @@ synth.plot_integrated_spectra(extinction_correction=True)
 synth.plot_integrated_spectra(extinction_correction=False)
 
 synth.plot_line_ratio()
+
