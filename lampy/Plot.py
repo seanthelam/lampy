@@ -7,8 +7,6 @@ from astropy.coordinates import SkyCoord
 import dask.array as da
 import pyneb as pn
 from scipy import integrate
-from astropy.modeling.models import BlackBody
-from astropy import constants as const
 from scipy.integrate import simps
 
 from extinction import fm07 as extinction_law
