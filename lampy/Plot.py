@@ -1,15 +1,17 @@
-import astropy.units as u
 import numpy as np
 import matplotlib.pyplot as plt
-from dustmaps.config import config
+
+import astropy.units as u
 import astropy.coordinates as coord
 from astropy.coordinates import SkyCoord
+
 import dask.array as da
 import pyneb as pn
 from scipy import integrate
 from scipy.integrate import simps
 
 from extinction import fm07 as extinction_law
+from dustmaps.config import config
 from dustmaps.edenhofer2023 import Edenhofer2023Query
 from dustmaps.marshall import MarshallQuery
 from dustmaps.bayestar import BayestarQuery
@@ -75,18 +77,6 @@ class BalmerLines:
         else:
             self.trans_ha = np.ones(ncells)
             self.trans_hb = np.ones(ncells)
-
-        # Debug: Plot extinction correction factors to verify they're not all the same
-        plt.plot(self.distance, self.trans_ha, label='H-alpha Transmission')
-        plt.plot(self.distance, self.trans_hb, label='H-beta Transmission')
-        plt.title('Extinction Corrections')
-        plt.xlabel('Distance (kpc)')
-        plt.ylabel('Transmission')
-        plt.legend()
-        plt.show()
-
-        print("H-alpha Transmission Factors: ", self.trans_ha)
-        print("H-beta Transmission Factors: ", self.trans_hb)
         
         # Default values
         self.dl = dl if dl is not None else maxdist/ncells
@@ -297,7 +287,7 @@ class BalmerLines:
 
         # Calculate integrated intensities
         if extinction_correction:
-            ha_peak_intensity = np.max(self.intensities_ha_with.value)
+            ha_peak_intensity = np.max(self.intensities_ha_with.value) # .value strips units
             hb_peak_intensity = np.max(self.intensities_hb_with.value)
             label = 'with Dust Correction'
         else:
@@ -325,7 +315,7 @@ class BalmerLines:
         plt.fill_between(wavelengths, spectra_h_alpha, alpha=0.3)
         plt.fill_between(wavelengths, spectra_h_beta, alpha=0.3)
         plt.xlabel('Wavelength (nm)')
-        plt.ylabel('Intensity')
+        plt.ylabel('Intensity (R)')
         plt.title(f'Integrated Spectra of H-alpha and H-beta {label}')
         plt.legend()
         plt.grid(True)
@@ -356,33 +346,4 @@ class BalmerLines:
         plt.ylabel('Line Ratio')
         plt.legend()
         plt.show()  
-
-# Create an instance of the class
-length = 100
-maxdist = 2 * u.kpc
-ncells = 100
-dl = 46 * u.pc
-l = 6 * u.deg
-b = 5 * u.deg
-synth = BalmerLines(length, dl, l=l, b=b)
-
-# Manually input v_e and n_e values
-synth.manual_input(1, 100, 0.39)
-synth.manual_input(2, 9, 10)
-
-# Plot H-alpha intensity
-synth.plot_intensity('ha', extinction_correction=True)
-synth.plot_intensity('ha', extinction_correction=False)
-
-# Plot H-beta intensity
-synth.plot_intensity('hb', extinction_correction=True)
-synth.plot_intensity('hb', extinction_correction=False)
-
-# Plot comparison of H-alpha and H-beta intensities
-synth.plot_comparison(velocities)
-
-synth.plot_integrated_spectra(extinction_correction=True)
-synth.plot_integrated_spectra(extinction_correction=False)
-
-synth.plot_line_ratio()
 
