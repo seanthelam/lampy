@@ -93,6 +93,7 @@ class BalmerLines:
 
         Parameters
         ----------
+        self : the instance of the class
         dustmap : string
             Name of the dustmap to use ('edenhofer', 'marshall', 'bayestar').
         lbd : SkyCoord
@@ -126,6 +127,7 @@ class BalmerLines:
 
         Parameters
         ----------
+        self : the instance of the class
         index : int
             The index at which the new value will be inserted.
         v_e_value : float
@@ -146,6 +148,7 @@ class BalmerLines:
 
         Parameters
         ----------
+        self : the instance of the class
         velocities : array
             Array of input velocities
         const : intensity constant of an emission line in units: R/kms^-1
@@ -174,6 +177,7 @@ class BalmerLines:
 
         Parameters
         ----------
+        self : the instance of the class
         velocities : array
             Array of input velocities.
 
@@ -195,6 +199,7 @@ class BalmerLines:
 
         Parameters
         ----------
+        self : the instance of the class
         velocities : array
             Array of input velocities.
 
@@ -234,7 +239,10 @@ class BalmerLines:
 
         Parameters
         ----------
+        self : the instance of the class
         line : indicates the type of emission line
+        extinction_correction : boolean
+            Flag indicating whether extinction correction is applied or not. Default is True.
         """
         
         if line == 'ha':
@@ -259,6 +267,7 @@ class BalmerLines:
 
         Parameters
         ----------
+        self : the instance of the class
         velocities : array
             Array of input velocities.
         """
@@ -277,6 +286,12 @@ class BalmerLines:
         """
         This function plots the integrated spectra for H-alpha and H-beta emission lines,
         both with and without extinction correction.
+
+        Parameters
+        ----------
+        self : the instance of the class
+        extinction_correction : boolean
+            Flag indicating whether extinction correction is applied or not. Default is True.
         """
         
         wavelengths = np.linspace(400, 700, 1000)  # Range of wavelengths from 400 nm to 700 nm
