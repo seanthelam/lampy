@@ -56,23 +56,15 @@ class BalmerLines:
                        distance = self.distance,
                        frame = "galactic")
 
-        # Extinction parameters
-        wave_Ks = 2.17 * u.micron
-        A_KS_to_A_v = 1. / extinction_law(np.array([wave_Ks.to(u.AA).value]), 1.)
-
         if dustmap is not None:
             # Get extinction data and parameters based on the specified dustmap
-            extinction_data = self.get_extinction_parameters(dustmap, lbd)
+            extinction = Extinction(dustmap, lbd)
             
             # H-alpha
-            wave_ha = np.array([6562.8]) * u.AA
-            A_V_to_A_ha = extinction_law(wave_ha.to(u.AA).value, 1.)
-            self.trans_ha = 10 ** (-0.4 * A_KS_to_A_v * A_V_to_A_ha * extinction_data)
+            self.trans_ha = extinction.extinction_data_ha
         
             # H-beta
-            wave_hb = np.array([4861.32]) * u.AA
-            A_V_to_A_hb = extinction_law(wave_hb.to(u.AA).value, 1.)
-            self.trans_hb = 10 ** (-0.4 * A_KS_to_A_v * A_V_to_A_hb * extinction_data)
+            self.trans_hb = extinction.extinction_data_hb
 
         else:
             self.trans_ha = np.ones(ncells)
@@ -86,40 +78,6 @@ class BalmerLines:
         
         # Precompute intensities
         self.precompute_intensities()
-
-    def get_extinction_parameters(self, dustmap, lbd):
-        """
-        Get the extinction parameters for the specified dustmap.
-
-        Parameters
-        ----------
-        self : the instance of the class
-        dustmap : string
-            Name of the dustmap to use ('edenhofer', 'marshall', 'bayestar').
-        lbd : SkyCoord
-            Sky coordinatesfor the extinction query.
-
-        Returns
-        -------
-        extinction_data : array
-            Extinction data for the specified dust map.
-        
-        """
-
-        if dustmap == 'edenhofer':
-            eden_mean = eden(lbd, mode='mean')
-            extinction_data = eden_mean * 2.8 # Convert E(B-V) to AV
-
-        elif dustmap == 'marshall':
-            extinction_data = marsh(lbd)
-
-        elif dustmap == 'bayestar':
-            extinction_data = bay(lbd)
-
-        else:
-            raise ValueError(f"Unknown dustmap: {dustmap}")
-
-        return extinction_data
     
     def manual_input(self, index, v_e_value, n_e_value):
         """
@@ -361,4 +319,3 @@ class BalmerLines:
         plt.ylabel('Line Ratio')
         plt.legend()
         plt.show()  
-
