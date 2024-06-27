@@ -17,7 +17,7 @@ from dustmaps.marshall import MarshallQuery
 from dustmaps.bayestar import BayestarQuery
 
 class BalmerLines:
-    def __init__(self, ncells, maxdist, dustmap='marshall', l=6*u.deg, b=5*u.deg, dl=None, sigma_i=None, T_e=None, velocities=None): 
+    def __init__(self, ncells, maxdist, dustmap=None, l=6*u.deg, b=5*u.deg, dl=None, sigma_i=None, T_e=None, velocities=None): 
         """
         This class defines length of arrays, distance between cells, distances from zero,
         electron velocity, electron density, sky coordinates, and accounts for dust by
