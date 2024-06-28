@@ -17,7 +17,7 @@ from dustmaps.marshall import MarshallQuery
 from dustmaps.bayestar import BayestarQuery
 
 class BalmerLines:
-    def __init__(self, ncells, maxdist, dustmap=None, l=6*u.deg, b=5*u.deg, dl=None, sigma_i=None, T_e=None, velocities=None): 
+    def __init__(self, ncells, maxdist, dustmap_class=None, l=6*u.deg, b=5*u.deg, dl=None, sigma_i=None, T_e=None, velocities=None): 
         """
         This class defines length of arrays, distance between cells, distances from zero,
         electron velocity, electron density, sky coordinates, and accounts for dust by
@@ -28,10 +28,14 @@ class BalmerLines:
         self : the instance of the class
         ncells : number of cells/inputs in the array
         maxdist : maximum distance
+        dustmap_class : class, optional
+            The dustmap query class to use (Edenhofer2023Query, MarshallQuery, or BayestarQuery). Default is None.
+        l : float, optional
+            Galactic longitude in degrees. Default is 6.
+        b : float, optional
+            Galactic latitude in degrees. Default is 5.
         dl : float with units, optional
             Distance between cells. Default is None.
-        dustmap : string or None, optional
-            Name of the dustmap to use ('edenhofer', 'marshall', 'bayestar'). Default is None.
         sigma_i : float with units, optional
             Electron velocity dispersion. Default is None.
         T_e : float with units, optional
@@ -48,7 +52,7 @@ class BalmerLines:
         self.n_e = np.zeros(ncells) / u.cm**(-3)
         self.l = np.ones(ncells) * l
         self.b = np.ones(ncells) * b
-        self.dustmap = dustmap
+        self.dustmap_class = dustmap_class
 
         # Sky Coordinates (Latitude, Longitude, Distance)
         lbd = SkyCoord(l = self.l ,
@@ -56,19 +60,19 @@ class BalmerLines:
                        distance = self.distance,
                        frame = "galactic")
 
-        if dustmap is not None:
-            # Get extinction data and parameters based on the specified dustmap
-            extinction = Extinction(dustmap, lbd)
-            
-            # H-alpha
-            self.trans_ha = extinction.extinction_data_ha
-        
-            # H-beta
-            self.trans_hb = extinction.extinction_data_hb
-
+        # Get extinction data and parameters based on the specified dustmap
+        if dustmap_class is not None:
+            dustmap = dustmap_class()
         else:
-            self.trans_ha = np.ones(ncells)
-            self.trans_hb = np.ones(ncells)
+            dustmap = None
+        
+        extinction = Extinction(dustmap, lbd)
+            
+        # H-alpha
+        self.trans_ha = extinction.extinction_data_ha
+        
+        # H-beta
+        self.trans_hb = extinction.extinction_data_hb
         
         # Default values
         self.dl = dl if dl is not None else maxdist/ncells
