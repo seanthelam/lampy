@@ -18,6 +18,7 @@ from dustmaps.edenhofer2023 import Edenhofer2023Query
 from dustmaps.marshall import MarshallQuery
 from dustmaps.bayestar import BayestarQuery
 
+
 class Extinction:
     def __init__(self, dustmap, lbd):
         """
@@ -33,13 +34,26 @@ class Extinction:
         
         self.dustmap = dustmap
         self.lbd = lbd
-        self.extinction_curve = self._read_extinction_curve("data/extinction-edenhofer2023.txt")
+        self.extinction_curve = self._read_extinction_curve("extinction_curve.txt")
         self.extinction_data_ha, self.extinction_data_hb = self._get_extinction_parameters()
 
     def _read_extinction_curve(self, filepath):
+        """
+        Read the extinction curve from the file.
+
+        Parameters
+        ----------
+        filepath : string
+            Path to the file containing the extinction curve data.
+
+        Returns
+        -------
+        dict : a dictionary with wavelength as keys (in nanometers) and extinction values as values
+        """
+        
         # Read the extinction curve from the file
         data = np.loadtxt(filepath, skiprows=1)
-        wavelength = data[:, 0] # First column: wavelength in micrometers
+        wavelength = data[:, 0] # First column: wavelength in nanometers
         extinction = data[:, 1] # Second column: extinction values
         return dict(zip(wavelength, extinction))
     
@@ -62,8 +76,6 @@ class Extinction:
             wave_hb = np.array([4861.32]) * u.AA
             A_V_to_A_hb = extinction_law(wave_hb.to(u.AA).value, 1.)
             
-            eden_mean = self.dustmap.query(self.lbd, mode='mean')
-
             zgr23_extinction = self.dustmap(self.lbd, mode='mean')
             
             extinction_data_ha = self._convert_zgr23_to_extinction(zgr23_extinction, 656.3) * A_V_to_A_ha # Convert E(B-V) to AV
@@ -97,6 +109,22 @@ class Extinction:
         return extinction_data_ha, extinction_data_hb
 
     def _convert_zgr23_to_extinction(self, zgr23_extinction, wavelength):
+        """
+        Convert the ZGR23 extinction to the specified wavelength.
+
+        Parameters
+        ----------
+        zgr23_extinction : float
+            ZGR23 extinction value.
+        wavelength : float
+            Wavelength in nanometers.
+
+        Returns
+        -------
+        float
+            Extinction value for the specified wavelength.
+        """
+        
         wavelengths = np.array(list(self.extinction_curve.keys()))
         extinctions = np.array(list(self.extinction_curve.keys()))
         interp_func = interp1d(wavelengths, extinctions, kind='linear', fill_value="extrapolate")
@@ -105,6 +133,7 @@ class Extinction:
             raise ValueError(f"No extinction value found for wavelength: {wavelength}")
         # Multiply the unitless ZGR23 extinction by the factor of 2.8
         return zgr23_extinction * 2.8 * extinction
+        
 
 
 class BalmerLines:
