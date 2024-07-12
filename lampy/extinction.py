@@ -50,15 +50,10 @@ class Extinction:
             return np.ones_like(self.lbd.l.value), np.ones_like(self.lbd.l.value) # Default extinction values if dustmap is None
 
         if isinstance(self.dustmap, Edenhofer2023Query):
-            wave_ha = np.array([6562.8]) * u.AA
-            A_V_to_A_ha = extinction_law(wave_ha.to(u.AA).value, 1.)
-            wave_hb = np.array([4861.32]) * u.AA
-            A_V_to_A_hb = extinction_law(wave_hb.to(u.AA).value, 1.)
+            eden_extinction = self.dustmap(self.lbd, mode='mean')
             
-            zgr23_extinction = self.dustmap(self.lbd, mode='mean')
-            
-            extinction_data_ha = self._convert_zgr23_to_extinction(656.3) * zgr23_extinction * 2.8
-            extinction_data_hb = self._convert_zgr23_to_extinction(486.1) * zgr23_extinction * 2.8
+            extinction_data_ha = self._convert_zgr23_to_extinction(656.3) * eden_extinction * 2.8
+            extinction_data_hb = self._convert_zgr23_to_extinction(486.1) * eden_extinction * 2.8
 
         elif isinstance(self.dustmap, MarshallQuery):
             wave_Ks = 2.17 * u.micron
