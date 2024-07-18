@@ -11,7 +11,7 @@ This package has the following dependencies:
 * `Astropy <http://www.astropy.org>`_ 5.3 or later
 * `matplotlib <http://matplotlib.org>`_ 3.8 or later
 * `pandas <http://pandas.pydata.org>`_ 2.2 or later
-* `seaborn <https://seaborn.pydata.org/index.html>`_ 0.9 or later
+* `seaborn <https://seaborn.pydata.org/index.html>`_ 0.12 or later
 
 Installation
 ------------
