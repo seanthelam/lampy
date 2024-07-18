@@ -9,7 +9,7 @@ three-dimensional space and will include more than just H-alpha and H-beta.
 
 Requirements
 ------------
-lampy uses numpy, matplotlib, astropy, scipy, and other standard python libraries.
+lampy uses numpy, matplotlib, astropy, scipy, pyneb, and other standard python libraries.
 
 Installation
 ------------
