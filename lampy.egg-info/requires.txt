@@ -1,0 +1,10 @@
+
+[docs]
+sphinx
+sphinx-automodapi
+numpydoc
+
+[test]
+pytest
+pytest-doctestplus
+pytest-cov
