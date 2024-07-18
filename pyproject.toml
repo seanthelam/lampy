@@ -29,6 +29,7 @@ test = [
 docs = [
     "sphinx",
     "sphinx-automodapi",
+    "numpydoc",
 ]
 [project.urls]
 repository = "https://github.com/seanthelam/lampy"
