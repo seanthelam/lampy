@@ -12,7 +12,7 @@ This package has the following dependencies:
 * `matplotlib <http://matplotlib.org>`_ 3.8 or later
 * `pandas <http://pandas.pydata.org>`_ 2.2 or later
 * `seaborn <https://seaborn.pydata.org/index.html>`_ 0.12 or later
-* `pyneb<https://github.com/Morisset/PyNeb_devel>`_ 1.1 or later
+* `pyneb <https://github.com/Morisset/PyNeb_devel>`_ 1.1 or later
 
 Installation
 ------------
