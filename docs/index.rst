@@ -7,6 +7,8 @@ This is the documentation for lampy.
    :maxdepth: 2
    :caption: Contents:
 
+   installing.rst
+
 Indices and tables
 ==================
 
