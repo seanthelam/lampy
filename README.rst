@@ -1,3 +1,6 @@
+Python Package to Simulate the Kinematics of Diffuse Ionized Gas 
+-----------------------------------------------------------------
+
 The `lampy` package is currently a developer, practice Python package. The actual package
 will be located on github.com/Deech08. At the moment, the `lampy` package provides a way to
 calculate emission line intensities for H-alpha and H-beta, with and without dust corrections.
