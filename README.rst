@@ -7,6 +7,10 @@ calculate emission line intensities for H-alpha and H-beta, with and without dus
 Future additions will be able to simulate the kinematics of emission lines in a
 three-dimensional space and will include more than just H-alpha and H-beta.
 
+Requirements
+------------
+lampy uses numpy, matplotlib, astropy, scipy, and other standard python libraries.
+
 Installation
 ------------
 
