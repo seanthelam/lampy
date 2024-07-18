@@ -9,10 +9,10 @@ This package has the following dependencies:
 * `Python <http://www.python.org>`_ 3.10 or later
 * `Numpy <http://www.numpy.org>`_ 1.26 or later
 * `Astropy <http://www.astropy.org>`_ 5.3 or later
+* `SciPy <http://scipy.org>`_ 1.13 or later
+* `PyNeb <https://github.com/Morisset/PyNeb_devel>`_ 1.1 or later
 * `matplotlib <http://matplotlib.org>`_ 3.8 or later
-* `pandas <http://pandas.pydata.org>`_ 2.2 or later
 * `seaborn <https://seaborn.pydata.org/index.html>`_ 0.12 or later
-* `pyneb <https://github.com/Morisset/PyNeb_devel>`_ 1.1 or later
 
 Installation
 ------------
