@@ -27,7 +27,7 @@ Plotting intensities with and without dust corrections:
     >>> # Plot H-alpha Intensity without dust correction for multiple cells at a range of velocities
     >>> synthetic_line.plot_intensity('ha', extinction_correction=False)
 
-.. image::
+.. image:: images/ha_intensity.png
 
     >>> # Plot H-beta Intensity with dust correction for multiple cells at a range of velocities
     >>> synthetic_line.plot_intensity('hb', extinction_correction=True)
@@ -35,7 +35,7 @@ Plotting intensities with and without dust corrections:
     >>> # Plot H-beta Intensity without dust correction for multiple cells at a range of velocities
     >>> synthetic_line.plot_intensity('hb', extinction_correction=False)
 
-.. image::
+.. image:: images/hb_intensity.png
 
 
 Plotting a comparison graph:
@@ -43,13 +43,15 @@ Plotting a comparison graph:
     >>> # Plot comparison of H-alpha and H-beta intensities
     >>> synthetic_line.plot_comparison(velocities)
 
-.. image::
+.. image:: images/comparison_graph.png
 
 
 Plotting integrated spectra graphs:
 
     >>> # Plot graphs of the emission lines' integrated spectra
     >>> synthetic_line.plot_integrated_spectra(extinction_correction=True) # with dust correction
+
+.. image:: images/integrated_spectra.png
     >>> synthetic_line.plot_integrated_spectra(extinction_correction=False) # without dust correction
 
 .. image::
