@@ -1,8 +1,9 @@
 Creating Intensity Graphs with `lampy`
 ======================================
 
-The :class:`~lampy.BalmerLines` class has multiple methods for plotting intensity graphs
-with the help of matplotlib.
+The :class:`~lampy.BalmerLines` class is used to calculate intensities, and
+has multiple methods for plotting intensity graphs
+with the help of matplotlib. 
 
     >>> import lampy
 
