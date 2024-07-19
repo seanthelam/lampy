@@ -34,7 +34,9 @@ Plotting intensities with and without dust corrections:
     >>> synthetic_line.plot_intensity('hb', extinction_correction=False)
 
 .. image:: images/ha_intensity.png
+    :width: 600
 .. image:: images/hb_intensity.png
+    :width: 600
 
 
 Plotting a comparison graph:
@@ -43,6 +45,7 @@ Plotting a comparison graph:
     >>> synthetic_line.plot_comparison(velocities)
 
 .. image:: images/comparison_graph.png
+    :width: 600
 
 
 Plotting integrated spectra graphs:
@@ -52,3 +55,4 @@ Plotting integrated spectra graphs:
     >>> synthetic_line.plot_integrated_spectra(extinction_correction=False) # without dust correction
 
 .. image:: images/integrated_spectra.png
+    :width: 600
