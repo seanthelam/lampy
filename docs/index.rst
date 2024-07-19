@@ -8,6 +8,7 @@ This is the documentation for lampy.
    :caption: Contents:
 
    installing.rst
+   intensity_graphs.rst
 
 Indices and tables
 ==================
