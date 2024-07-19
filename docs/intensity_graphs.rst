@@ -17,8 +17,7 @@ with the help of matplotlib.
 
     >>> synthetic_line = BalmerLines(length, dl, l=l, b=b, dustmap_class = BayestarQuery)
 
-The code above will create an instance of the class. You can decide which graphs you would like
-by doing the following codes.
+The example above will create an instance of the class. You can decide which graphs you would like by doing the following codes.
 
 Plotting intensities with and without dust corrections:
 
